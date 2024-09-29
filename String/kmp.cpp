@@ -1,5 +1,3 @@
-vector<int>lps;
-string s;
 vector<int>kmp(string &s)
 {
     int n = s.size();
@@ -18,9 +16,8 @@ vector<int>kmp(string &s)
 }
 
 // matched upto ith charecter...transition if next charecter is ch
-int f(int i, char ch)
+int f(int i, char ch, vector<int>&lps, string &s)
 {
-    
     while(i >= 0 && s[i] != ch){
         if(i == 0) i = -1;
         else i = lps[i - 1];
