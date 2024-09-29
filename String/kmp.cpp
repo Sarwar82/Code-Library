@@ -1,6 +1,6 @@
 vector<int>lps;
 string s;
-vector<int>f(string &s)
+vector<int>kmp(string &s)
 {
     int n = s.size();
     vector<int>lps(n);
