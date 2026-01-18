@@ -2,73 +2,68 @@
 
 ## Description
 
-Arpa and Alfeh are playing a game on an array `nums` of length \(n\).
-Before the game starts, Arpa chooses a subset of indices
-\[
-S \subseteq \{1,2,\dots,n\}.
-\]
-The game is then played **only** on the elements with indices in \(S\).
+You are given two strings `s` and `t`. Your goal is to transform string `s` into string `t` using the following process.
+You may perform the operation at most once, defined as follows:
+1. Choose a subarray $[l,r]$ of string `s` and discard all characters outside this subarray.  
+   The cost of selecting this subarray is
+   
+$$f(l,r) = r - l + 1$$
 
-In one move, a player:
+2. From the remaining substring, you may remove any number of characters.  
+   If you remove $x$ characters, the cost of this step is
 
-1. chooses an index \(i \in S\),
-2. chooses a prime \(p\) and an integer \(k>0\) such that
-   \[
-   p^k \mid \texttt{nums}[i],
-   \]
-3. replaces \(\texttt{nums}[i]\) with
-   \[
-   \texttt{nums}[i] / p^k.
-   \]
+$$
+x + 1
+$$
 
-Players alternate moves, and Arpa plays first.
-The player who cannot make a move loses.
-Both players play optimally.
+3. You may rearrange the remaining characters in any order at no additional cost.
+   
+After performing these steps, the resulting string must be exactly equal to `t`.
+
+The total cost of the operation is defined as:
+
+$$
+(r - l + 1) \times (x + 1)
+$$
+
+Your task is to determine the minimum possible cost to convert `s` into `t`.  
+If it is impossible, output `-1`.
 
 
-Now the array changes over time. You are given \(q\) update queries.
-Each query gives an index \(i\) and a value \(x\), meaning:
-\[
-\texttt{nums}[i] \leftarrow x.
-\]
 
-After **each** update, consider the game played on the **current** array `nums`.
-Compute how many different **non-empty** subsets \(S\) Arpa can choose initially so that Arpa wins.
-Since the answer can be large, print it modulo \(998244353\).
 
-> Indices in queries are **1-based**.
+
+
 
 ## Input Format
 
 Input is a JSON object with the following fields:
 
-- `nums` (array of integers): the initial array of length \(n\).
-- `queries` (array of arrays): each query is a pair \([i,x]\), meaning set \(\texttt{nums}[i]\leftarrow x\).
+- `s` (string): the initial string $s$
+- `t` (string): the target string $t$
 
 Example input:
 
 ```json
 {
-  "nums": [2, 4, 8],
-  "queries": [
-    [1, 16],
-    [3, 1]
-  ]
+  "s": "abcde",
+  "t": "ace"
 }
+
 ```
 
 ## Output Format
 
-Output is a JSON value (type: array of integers):
+Output is a JSON value (type: integer):
 
-- Output an array `ans` of length \(q\),
-  where `ans[t]` is the number of **non-empty** subsets \(S\) such that Arpa wins **after applying the \(t\)-th update**,
-  is taken modulo \(998244353\).
+
+- The minimum cost to transform `s` into `t`
+- Output `-1` if the transformation is not possible
 
 Example output:
 
 ```json
-[7, 6]
+15
 ```
 
 ## Constraints
