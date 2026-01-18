@@ -4,17 +4,12 @@
 
 You are given two strings `s` and `t`. Your goal is to transform string `s` into string `t` using the following process.
 You may perform the operation at most once, defined as follows:
-1. Choose a subarray $[l,r]$ of string `s` and discard all characters outside this subarray.  
-   The cost of selecting this subarray is
-   
-$$f(l,r) = r - l + 1$$
+1. Choose indices $l$ and $r$ $(1 \le l \le r \le |s|)$ and keep the substring $s[l..r]$.  
+All characters outside this substring are removed.  
+The cost of this step is $r - l + 1$.
 
-2. From the remaining substring, you may remove any number of characters.  
-   If you remove $x$ characters, the cost of this step is
-
-$$
-x + 1
-$$
+2. From the remaining substring, remove exactly $x$ characters.  
+The cost of this step is $x + 1$.
 
 3. You may rearrange the remaining characters in any order at no additional cost.
    
@@ -68,12 +63,10 @@ Example output:
 
 ## Constraints
 
-- \(1 \le n \le 10^5\)
-- \(1 \le q \le 10^5\)
-- \(1 \le \texttt{nums}[i] \le 65535\)
-- For each query \([i,x]\): \(1 \le i \le n\) and \(1 \le x \le 65535\)
-- Time limit: \(1000\text{ms}\)
-- Memory limit: \(256\text{MB}\)
+- $1 \le |s|, |t| \le 10^5$
+- Time limit: $2000$ ms
+- Memory limit: $256$ MB
+
 
 ## Examples
 
@@ -83,30 +76,48 @@ Example output:
 
 ```json
 {
-  "nums": [2, 4, 8],
-  "queries": [
-    [1, 16],
-    [3, 1]
-  ]
+  "s": "abcde",
+  "t": "ace"
 }
+
 ```
 
 **Output:**
 
 ```json
-[7, 6]
+15
 ```
-
 **Explanation:**
 
-- After update \([1,16]\), the array becomes \([16,4,8]\).
-  There are \(7\) non-empty subsets \(S \subseteq \{1,2,3\}\) for which Arpa wins:
-  \[
-  \{1\},\{2\},\{3\},\{1,2\},\{1,3\},\{2,3\},\{1,2,3\}.
-  \]
+One optimal choice is:
 
-- After update \([3,1]\), the array becomes \([16,4,1]\).
-  There are \(6\) non-empty subsets \(S \subseteq \{1,2,3\}\) for which Arpa wins:
-  \[
-  \{1\},\{2\},\{1,2\},\{1,3\},\{2,3\},\{1,2,3\}.
-  \]
+- Select subarray `"abcde"` → cost $= 5$
+- Remove $2$ characters → cost $= 2 + 1 = 3$
+- Rearrange remaining characters to form `"ace"`
+
+- Total cost: $5 * 3 = 15$
+
+### Example 2
+
+**Input:**
+
+```json
+{
+  "s": "abcd",
+  "t": "xyz"
+}
+```
+
+
+
+**Output:**
+
+```json
+-1
+```
+**Explaination**
+
+No subarray of `s` contains the required characters to form `t`, so the transformation is impossible.
+
+
+
