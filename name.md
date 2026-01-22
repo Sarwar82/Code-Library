@@ -5,7 +5,8 @@
 You are given an array `arr` of length $n$ consisting of integers.
 
 You may perform at most one operation, defined as follows:
-  - Choose a contiguous subarray of `arr` whose length is at most `l`, and delete it from the array.
+
+- Choose a contiguous subarray of `arr` whose length is at most `l`, and delete it from the array.
 
 After performing the operation, let the remaining array be `b`.  
 
@@ -25,7 +26,6 @@ Input is a JSON object with the following fields:
 - `k` (integer): the index (1-based) of the smallest element whose value defines the score
 - `l` (integer): the maximum allowed length of the deleted subarray
 
-
 Example input:
 
 ```json
@@ -34,8 +34,6 @@ Example input:
   "k": 2,
   "l": 2
 }
-
-
 ```
 
 ## Output Format
@@ -47,20 +45,17 @@ Output is a JSON value (type: integer):
 Example output:
 
 ```json
-3
+4
 ```
-
-## Constraints
 
 ## Constraints
 
 - $1 \le n \le 10^5$
 - $1 \le k \le n$
 - $0 \le l \le n$
-- $-10^9 \le \text{arr}[i] \le 10^9$
+- $1 \le \text{arr}[i] \le 10^9$
 - Time limit: $4000$ ms
 - Memory limit: $256$ MB
-
 
 ## Examples
 
@@ -74,16 +69,16 @@ Example output:
   "k": 2,
   "l": 2
 }
-
-
 ```
+
 **Output:**
 
 ```json
-3
+4
 ```
 
 **Explanation:**
+
 One optimal choice is to delete the subarray $[2,3] = [1,3]$, leaving the array:
 
 $[5,2,4]$
@@ -95,7 +90,6 @@ $[2,4,5]$
 whose $2$-nd smallest element is $4$.  
 No other valid deletion yields a higher score.
 
-
 ### Example 2
 
 **Input:**
@@ -106,7 +100,6 @@ No other valid deletion yields a higher score.
   "k": 3,
   "l": 1
 }
-
 ```
 
 **Output:**
@@ -116,6 +109,7 @@ No other valid deletion yields a higher score.
 ```
 
 **Explanation:**
+
 Since the deletion is allowed for at most $l = 1$ element, it is also valid to delete nothing.
 
 If no elements are deleted, the remaining array is $[1,2,3]$, whose $3$-rd smallest element is $3$.
@@ -124,10 +118,8 @@ If a subarray of length $1$ is deleted, the remaining array has only $2$ element
 
 Among all valid choices (including deleting nothing), the maximum possible score is $3$.
 
-
 ## Notes
 
 - The array is considered 1-indexed when describing subarrays.
 - The deletion operation is optional; deleting nothing is allowed.
 - The answer should be computed using 64-bit integers.
-
