@@ -1,61 +1,65 @@
-# Kth Minimum Value
+# Cyclic String
 
 ## Description
 
-You are given an array `arr` of length $n$ consisting of integers.
+You are given a string `s` of length $n$.
 
-You may perform at most one operation, defined as follows:
+A cyclic shift of `s` is defined as follows:  
+choose an index $i$ $(1 \le i \le n)$, and form a new string by moving the prefix $s[1..i-1]$ to the end of the string.
 
-- Choose a contiguous subarray of `arr` whose length is at most `l`, and delete it from the array.
+Formally, the cyclic shift starting at position $i$ is:
 
-After performing the operation, let the remaining array be `b`.  
+$$
+s[i..n] + s[1..i-1]
+$$
 
-If the length of `b` is less than `k`, the resulting array is considered invalid.
+Consider the collection of all cyclic shifts of `s`.  
+These cyclic shifts are not required to be distinct. If `s` has periodic structure, identical shifts may appear multiple times.
 
-The score of a valid array is defined as the $k$-th smallest element of `b` (using 1-based indexing).  
+You must choose exactly $k$ cyclic shifts from this collection.
+For a chosen set of $k$ cyclic shifts, define their **Longest Common Prefix (LCP)** as the largest integer $L$ such that all $k$ strings share the same prefix of length $L$.
 
-The score of an invalid array is defined to be $0$.
-
-Your task is to determine the maximum possible score that can be obtained over all possible choices of the deleted subarray.
+Your task is to determine the maximum possible value of this LCP over all possible choices of $k$ cyclic shifts.
 
 ## Input Format
 
+<!-- HOW: Technical schema only. Field names, types, JSON structure. No need to re-explain the problem goal. -->
+
 Input is a JSON object with the following fields:
 
-- `arr` (array of integers): the input array
-- `k` (integer): the index (1-based) of the smallest element whose value defines the score
-- `l` (integer): the maximum allowed length of the deleted subarray
+- `s` (string): the given string of length $n$
+- `k` (integer): the number of cyclic shifts to select
 
 Example input:
 
 ```json
 {
-  "arr": [5, 1, 3, 2, 4],
-  "k": 2,
-  "l": 2
+  "s": "ababa",
+  "k": 3
 }
+
 ```
 
 ## Output Format
 
 Output is a JSON value (type: integer):
 
-- the maximum score obtainable over all valid choices of the deleted subarray (including the option of deleting nothing).
+- The maximum possible length of the longest common prefix shared by any selection of exactly $k$ cyclic shifts of `s`.
 
 Example output:
 
 ```json
-4
+1
 ```
 
 ## Constraints
 
 - $1 \le n \le 10^5$
 - $1 \le k \le n$
-- $0 \le l \le n$
-- $1 \le \text{arr}[i] \le 10^9$
-- Time limit: $4000$ ms
+- `s` consists of lowercase English letters (`a`–`z`)
+- Time limit: $3000$ ms
 - Memory limit: $256$ MB
+
 
 ## Examples
 
@@ -65,61 +69,29 @@ Example output:
 
 ```json
 {
-  "arr": [5, 1, 3, 2, 4],
-  "k": 2,
-  "l": 2
+  "s": "ababa",
+  "k": 3
 }
 ```
 
 **Output:**
 
 ```json
-4
+1
 ```
 
-**Explanation:**
+**Explanation:** 
+All cyclic shifts of `"ababa"` are:
 
-One optimal choice is to delete the subarray $[2,3] = [1,3]$, leaving the array:
+- `"ababa"`
+- `"babaa"`
+- `"abaab"`
+- `"baaba"`
+- `"aabab"`
 
-$[5,2,4]$
+One optimal choice of $k = 3$ cyclic shifts is:
 
-The sorted remaining array is:
+- `"ababa"`, `"abaab"`, `"aabab"`
 
-$[2,4,5]$
-
-whose $2$-nd smallest element is $4$.  
-No other valid deletion yields a higher score.
-
-### Example 2
-
-**Input:**
-
-```json
-{
-  "arr": [1, 2, 3],
-  "k": 3,
-  "l": 1
-}
-```
-
-**Output:**
-
-```json
-3
-```
-
-**Explanation:**
-
-Since the deletion is allowed for at most $l = 1$ element, it is also valid to delete nothing.
-
-If no elements are deleted, the remaining array is $[1,2,3]$, whose $3$-rd smallest element is $3$.
-
-If a subarray of length $1$ is deleted, the remaining array has only $2$ elements, which is fewer than $k = 3$, and such a case is considered invalid with score $0$.
-
-Among all valid choices (including deleting nothing), the maximum possible score is $3$.
-
-## Notes
-
-- The array is considered 1-indexed when describing subarrays.
-- The deletion operation is optional; deleting nothing is allowed.
-- The answer should be computed using 64-bit integers.
+These three strings share a common prefix `"a"` of length $1$.  
+No selection of three cyclic shifts has a longer common prefix.
